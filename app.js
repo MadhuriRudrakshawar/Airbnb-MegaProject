@@ -6,6 +6,7 @@ const path = require("path");
 const methodOverride = require("method-override");
 const ejsMate = require("ejs-mate");
 
+
 main()
 .then (() => {
     console.log("Connected to database");
@@ -25,6 +26,8 @@ app.use(express.urlencoded({extended: true}));
 app.use(methodOverride("_method"));
 app.engine("ejs", ejsMate);
 app.use(express.static(path.join(__dirname, "/public")));
+// app.use(express.static('public'));  
+
 
 app.get("/", (req, res)=>{
     res.send("Hi, I am root");
@@ -60,7 +63,7 @@ app.post("/listings", async (req, res)=>{
 app.get("/listings/:id/edit", async (req,res) =>{
     let {id} =  req.params;
     const listing = await Listing.findById(id);
-    res.render("listings/edit.ejs", {listing});
+    res.render("listings/edit.ejs", { listing });
  
 });
 
@@ -79,6 +82,7 @@ app.delete("/listings/:id", async (req, res)=> {
     console.log(deleteListings);
     res.redirect("/listings");
 });
+
 
 
 
