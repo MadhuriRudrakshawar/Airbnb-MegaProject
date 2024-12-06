@@ -1,13 +1,14 @@
 <% layout("/layouts/boilerplate") %>
 
-<body>
   <div class="row mt-3">
     <div class="col-8 offset-2">
-      <h3>Creat New Heading</h3>
+      <h3>Creat New Listing</h3>
 
       <form
         method="POST"
         action="/listings"
+        novalidate     
+        class="needs-validation" 
       >
         <div class="mb-3">
           <label for="title" class="form-label">Title</label>
@@ -15,14 +16,19 @@
             name="listing[title]"
             placeholder="Enter title"
             class="form-control"
+            required
           />
+          <div class="invalid-feedback">Enter valid title</div>
         </div>
         <div class="mb-3">
           <label for="description" class="form-label">Description</label>
           <textarea
             name="listing[description]"
             class="form-control"
+            required
           ></textarea>
+          <div class="invalid-feedback">Enter short description</div>
+
         </div>
         <div class="mb-3">
           <label for="image" class="form-label">Image</label>
@@ -31,6 +37,8 @@
             placeholder="Enter image URL"
             class="form-control"
           />
+          <div class="invalid-feedback">Enter valid image url</div>
+
         </div>
         <div class="row">
           <div class="mb-3 col-md-4">
@@ -40,7 +48,10 @@
               placeholder="Enter price"
               type="number"
               class="form-control"
+              required
             />
+            <div class="invalid-feedback">Enter valid price</div>
+
           </div>
           <div class="mb-3 col-md-8">
             <label for="country" class="form-label">Country</label>
@@ -49,10 +60,13 @@
               placeholder="Enter country"
               type="text"
               class="form-control"
-              
+              required
             />
+            <div class="invalid-feedback">Enter valid country name</div>
+
           </div>
         </div>
+
         <div class="mb-3">
           <label for="location" class="form-label">Location</label>
           <input
@@ -60,10 +74,13 @@
             placeholder="Enter location"
             type="text"
             class="form-control"
+            required
           />
+          <div class="invalid-feedback">Enter valid location name</div>
+
         </div>
         <button class="btn btn-dark md-3 add-btn">Add</button>
       </form>
     </div>
   </div>
-</body>
+  <script src="/public/js/script.js"></script>
