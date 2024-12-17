@@ -6,6 +6,9 @@ const ExpressError = require("../utils/ExpressError");
 const Listing = require("../models/listing");
 const { isLoggedIn, isOnwer } = require("../middleware");
 const listingController = require("../controllers/listings");
+const multer = require('multer');
+const {storage} = require("../cloudConfig.js");
+const upload = multer({ storage })
 
 const validateListing = (req, res, next) => {
   let { error } = listingSchema.validate(req.body);
@@ -18,9 +21,12 @@ const validateListing = (req, res, next) => {
 };
 
 router
-.route("/")
+.route("/") 
 .get( wrapAsync(listingController.index))
-.post( isLoggedIn, validateListing,  wrapAsync(listingController.createListing));
+.post( isLoggedIn,  upload.single("listing[image]"), validateListing,
+wrapAsync(listingController.createListing));
+
+
 
 //new route
 router.get("/new", isLoggedIn, listingController.renderNewForm);
@@ -28,7 +34,7 @@ router.get("/new", isLoggedIn, listingController.renderNewForm);
 
 router.route("/:id")
 .get( wrapAsync(listingController.showListings))
-.put( isLoggedIn, validateListing,  wrapAsync(listingController.updateListing))
+.put( isLoggedIn,upload.single("listing[image]"), validateListing,  wrapAsync(listingController.updateListing))
 .delete( isLoggedIn,  wrapAsync(listingController.destroyListing));
 
 //edit route
